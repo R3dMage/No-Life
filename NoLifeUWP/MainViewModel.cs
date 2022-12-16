@@ -38,24 +38,33 @@ namespace NoLifeUWP
 
         private async void SongUpdateTimer_Tick(object sender, object e)
         {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, HistoryUrl);
-            using (HttpResponseMessage response = await HistoryClient.SendAsync(request))
+            HttpResponseMessage response;
+
+            try
             {
-                string content = await response.Content.ReadAsStringAsync();
-                content.Trim();
-                string[] songs = content.Split("\n");
-                Array.Reverse(songs);
-
-                if (songs.Length > 1)
-                    CurrentSong = songs[1];
-
-                HistoryList.Clear();
-                foreach(string song in songs)
-                {
-                    if (!string.IsNullOrEmpty(song))
-                        HistoryList.Add(song);
-                }
+                response = await HistoryClient.GetAsync(HistoryUrl);
             }
+            catch (HttpRequestException ex)
+            {
+                return;
+            }
+           
+            
+            string content = await response.Content.ReadAsStringAsync();
+            content.Trim();
+            string[] songs = content.Split("\n");
+            Array.Reverse(songs);
+
+            if (songs.Length > 1)
+                CurrentSong = songs[1];
+
+            HistoryList.Clear();
+            foreach(string song in songs)
+            {
+                if (!string.IsNullOrEmpty(song))
+                    HistoryList.Add(song);
+            }
+            
         }
     }
 }
