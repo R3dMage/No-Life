@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,10 +12,10 @@ using Windows.UI.Xaml.Controls;
 
 namespace NoLifeUWP
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ObservableRecipient
     {
         public ObservableCollection<string> HistoryList { get; set; }
-        public string CurrentSong { get { return currentSong; } set { Set(ref currentSong, value); } }
+        public string CurrentSong { get { return currentSong; } set { SetProperty(ref currentSong, value); } }
         private string currentSong;
 
         private readonly string HistoryUrl = "https://nolife-radio.com/history.txt";
