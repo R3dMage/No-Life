@@ -15,8 +15,14 @@ namespace NoLifeUWP
     public class MainViewModel : ObservableRecipient
     {
         public ObservableCollection<string> HistoryList { get; set; }
-        public string CurrentSong { get { return currentSong; } set { SetProperty(ref currentSong, value); } }
-        private string currentSong;
+        public string Game { get { return game; } set { SetProperty(ref game, value); } }
+        private string game;
+
+        public string Composer { get { return composer; } set { SetProperty(ref composer, value); } } 
+        private string composer;
+
+        public string System { get { return system; } set { SetProperty(ref system, value); } }
+        private string system;
 
         private readonly string HistoryUrl = "https://nolife-radio.com/history.txt";
         private DispatcherTimer SongUpdateTimer;
@@ -25,7 +31,7 @@ namespace NoLifeUWP
         public MainViewModel()
         {
             HistoryList = new ObservableCollection<string>();
-            CurrentSong = string.Empty;
+            Game = string.Empty;
 
             SongUpdateTimer = new DispatcherTimer();
             SongUpdateTimer.Tick += SongUpdateTimer_Tick;
@@ -54,8 +60,13 @@ namespace NoLifeUWP
             string[] songs = content.Split("\n");
             Array.Reverse(songs);
 
+            string songPlaying = string.Empty;
             if (songs.Length > 1)
-                CurrentSong = songs[1];
+                songPlaying = songs[1];
+
+            var list = songPlaying.Split("---");
+            Game = list[0];
+            System = list[1];
 
             HistoryList.Clear();
             foreach(string song in songs)

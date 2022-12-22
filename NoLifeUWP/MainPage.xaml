@@ -20,7 +20,8 @@
                       Volume="{Binding ElementName=VolumeSlider, Path=Value, Converter={StaticResource ConvertToPercent}}"/>
         <StackPanel Margin="50 10 50 0">
             <TextBlock Text="Now Playing:"/>
-            <TextBlock Text="{Binding CurrentSong}" FontSize="30"/>
+            <TextBlock Text="{Binding Game}" FontSize="30"/>
+            <TextBlock Text="{Binding System}" FontSize="20"/>
             <TextBlock Text="Volume"/>
             <TextBlock Text="{Binding ElementName=VolumeSlider, Path=Value}" HorizontalAlignment="Center"/>
             <Slider x:Name="VolumeSlider" Maximum="100"></Slider>            
