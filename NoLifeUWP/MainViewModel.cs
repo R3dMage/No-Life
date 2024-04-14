@@ -66,7 +66,9 @@ namespace NoLifeUWP
 
             var list = songPlaying.Split("---");
             Game = list[0];
-            System = list[1];
+
+            if (list.Length > 1)
+                System = list[1];
 
             HistoryList.Clear();
             foreach(string song in songs)
